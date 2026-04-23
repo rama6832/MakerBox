@@ -1,0 +1,41 @@
+name: CI MakerBox
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    services: # Necesario para Prisma/PostgreSQL
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout de código
+        [cite_start]uses: actions/checkout@v4 [cite: 15]
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Generar cliente de Prisma
+        run: npx prisma generate
+
+      - name: Ejecutar Linter
+        [cite_start]run: npm run lint [cite: 16]
+
+      - name: Ejecutar Tests
+        [cite_start]run: npm test [cite: 16]
