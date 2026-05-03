@@ -1,5 +1,5 @@
 .placeholder-root {
-  background: #0a0a0f;
+  background: #f7f5ff;
   min-height: 100vh;
   font-family: 'Space Grotesk', sans-serif;
 }
@@ -16,10 +16,10 @@
 
 .placeholder-tag {
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #e8622a;
+  color: #c0357a;
   margin-bottom: 1rem;
 }
 
@@ -28,13 +28,13 @@
   font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 800;
   letter-spacing: -2px;
-  color: #f0eee8;
+  color: #1a1035;
   margin-bottom: 1rem;
 }
 
 .placeholder-desc {
   font-size: 16px;
-  color: rgba(240, 238, 232, 0.45);
+  color: rgba(26, 16, 53, 0.45);
   max-width: 400px;
   line-height: 1.6;
 }
