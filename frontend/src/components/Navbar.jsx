@@ -8,8 +8,13 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <Link to="/" className="nav-logo">
-        <span className="logo-dot" />
-        MakerBox
+        <svg className="logo-icon" viewBox="0 0 26 26" fill="none">
+          <rect x="1" y="1" width="10" height="10" rx="2" fill="#5c35b8"/>
+          <rect x="14" y="1" width="10" height="10" rx="2" fill="#c0357a"/>
+          <rect x="1" y="14" width="10" height="10" rx="2" fill="#c0357a"/>
+          <rect x="14" y="14" width="10" height="10" rx="2" fill="#5c35b8"/>
+        </svg>
+        <span className="logo-maker">Maker</span><span className="logo-box">Box</span>
       </Link>
       <ul className="nav-links">
         <li>

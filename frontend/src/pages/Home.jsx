@@ -3,48 +3,7 @@ import Navbar from '../components/Navbar';
 import './Home.css';
 
 const projects = [
-  {
-    tag: 'Robótica',
-    title: 'Brazo robótico articulado',
-    desc: '6 grados de libertad, impreso en PLA con servos SG90. Incluye archivos STL y código Arduino.',
-    colorClass: 'card-img-orange',
-    icon: (
-      <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-        <rect width="56" height="56" rx="12" fill="rgba(232,98,42,0.15)" />
-        <path d="M18 38 L28 18 L38 38 Z" stroke="#e8622a" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
-        <path d="M21 32 L35 32" stroke="#e8622a" strokeWidth="1.5" />
-        <rect x="24" y="22" width="8" height="6" rx="1" fill="rgba(232,98,42,0.3)" />
-      </svg>
-    ),
-  },
-  {
-    tag: 'Electrónica',
-    title: 'Carcasa para ESP32',
-    desc: 'Enclosure modular para proyectos IoT. Ventilación integrada y soporte para pantalla OLED.',
-    colorClass: 'card-img-blue',
-    icon: (
-      <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-        <rect width="56" height="56" rx="12" fill="rgba(55,138,221,0.15)" />
-        <circle cx="28" cy="28" r="10" stroke="#378add" strokeWidth="1.5" fill="none" />
-        <circle cx="28" cy="28" r="4" fill="rgba(55,138,221,0.4)" />
-        <path d="M28 14 L28 18 M28 38 L28 42 M14 28 L18 28 M38 28 L42 28" stroke="#378add" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    tag: 'Sustentabilidad',
-    title: 'Maceteros modulares',
-    desc: 'Sistema de maceteros apilables impresos en PET reciclado. Diseño paramétrico editable.',
-    colorClass: 'card-img-green',
-    icon: (
-      <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-        <rect width="56" height="56" rx="12" fill="rgba(97,153,34,0.15)" />
-        <path d="M20 36 Q20 26 28 22 Q36 26 36 36" stroke="#639922" strokeWidth="1.5" fill="rgba(97,153,34,0.15)" strokeLinejoin="round" />
-        <path d="M24 36 Q24 30 28 28 Q32 30 32 36" fill="rgba(97,153,34,0.3)" />
-        <line x1="28" y1="36" x2="28" y2="42" stroke="#639922" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-  },
+  
 ];
 
 export default function Home() {
@@ -72,6 +31,7 @@ export default function Home() {
           </button>
         </div>
       </section>
+
 
       {/* PROJECTS */}
       <section className="section">
@@ -129,8 +89,7 @@ export default function Home() {
                 </svg>
               </div>
               <div className="print-box-label">
-                <strong>Impresión bajo demanda</strong>
-                Materiales premium · Entrega a domicilio
+                <strong>Impresión bajo alta demanda</strong>
               </div>
             </div>
           </div>
