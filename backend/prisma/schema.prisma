@@ -1,13 +1,76 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+enum RolUsuario {
+  ADMINISTRADOR
+  AYUDANTE
+  PROFESOR
+  ESTUDIANTE
+  INVITADO
+}
+
+enum EstadoPedido {
+  PENDIENTE
+  APROBADO
+  RECHAZADO
+  EN_PROCESO
+  FINALIZADO
+}
+
+model Usuario {
+  id            String      @id @default(uuid())
+  nombre        String
+  apellido      String
+  email         String      @unique
+  password      String?
+  rut           String?     @unique
+  rol           RolUsuario  @default(INVITADO)
+  estado        Boolean     @default(true)
+  creadoEn      DateTime    @default(now())
+  actualizadoEn DateTime    @updatedAt
+
+  proyectos     Proyecto[]
+  pedidos       Pedido[]
+}
+
+model Proyecto {
+  id            String    @id @default(uuid())
+  titulo        String
+  descripcion   String
+  categoria     String
+  imagenUrl     String?
+  publicado     Boolean   @default(false)
+  creadoEn      DateTime  @default(now())
+  actualizadoEn DateTime  @updatedAt
+
+  autor         Usuario   @relation(fields: [autorId], references: [id])
+  autorId       String
+
+  pedidos       Pedido[]
+}
+
+model Pedido {
+  id                  String       @id @default(uuid())
+  material            String
+  color               String?
+  calidad             String?
+  archivoStl          String
+  archivoDiseño       String?
+  comentario          String?
+  estado              EstadoPedido @default(PENDIENTE)
+  observacionAyudante String?
+  motivoRechazo       String?
+  creadoEn            DateTime     @default(now())
+  actualizadoEn       DateTime     @updatedAt
+
+  usuario             Usuario   @relation(fields: [usuarioId], references: [id])
+  usuarioId           String
+
+  proyecto            Proyecto  @relation(fields: [proyectoId], references: [id])
+  proyectoId          String
 }
