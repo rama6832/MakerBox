@@ -1,6 +1,20 @@
-// backend/index.test.js
-const sumar = (a, b) => a + b;
+const validarEmail = require('./utils/validarEmail');
 
-test("La suma de 2 + 2 es 4", () => {
-  expect(sumar(2, 2)).toBe(4);
+describe('validarEmail', () => {
+  test('retorna true para un email válido', () => {
+    expect(validarEmail('usuario@correo.com')).toBe(true);
+  });
+
+  test('retorna false si no tiene @', () => {
+    expect(validarEmail('usuariocorreo.com')).toBe(false);
+  });
+
+
+  test('retorna false si está vacío', () => {
+    expect(validarEmail('')).toBe(false);
+  });
+
+  test('retorna false si es null', () => {
+    expect(validarEmail(null)).toBe(false);
+  });
 });
