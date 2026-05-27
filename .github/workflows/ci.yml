@@ -25,6 +25,10 @@ jobs:
         working-directory: backend
         run: npm ci
 
+      - name: Fix permisos node_modules
+        working-directory: backend
+        run: chmod -R +x node_modules/.bin
+
       - name: Generar cliente de Prisma
         working-directory: backend
         env:
@@ -33,7 +37,7 @@ jobs:
 
       - name: Ejecutar Linter
         working-directory: backend
-        run: npx eslint .
+        run: npm run lint
 
       - name: Ejecutar Tests
         working-directory: backend
