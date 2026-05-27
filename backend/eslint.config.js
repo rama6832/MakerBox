@@ -21,7 +21,7 @@ module.exports = [
     rules: {
       'no-unused-vars': 'warn',
       'no-console': 'off',
-      'camelcase': ['error', { properties: 'never' }],
+      'camelcase': ['error', {properties: 'never'}],
       'object-curly-spacing': ['error', 'never'],
       'semi': ['error', 'always'],
       'quotes': ['error', 'single'],

@@ -18,3 +18,27 @@ describe('validarEmail', () => {
     expect(validarEmail(null)).toBe(false);
   });
 });
+
+const validarPassword = require('./utils/validarPassword');
+
+describe('validarPassword', () => {
+  test('retorna true para una contraseña válida', () => {
+    expect(validarPassword('segura123')).toBe(true);
+  });
+
+  test('retorna false si tiene menos de 6 caracteres', () => {
+    expect(validarPassword('abc')).toBe(false);
+  });
+
+  test('retorna false si está vacía', () => {
+    expect(validarPassword('')).toBe(false);
+  });
+
+  test('retorna false si es null', () => {
+    expect(validarPassword(null)).toBe(false);
+  });
+
+  test('retorna false si tiene espacios', () => {
+    expect(validarPassword('mi password')).toBe(false);
+  });
+});
