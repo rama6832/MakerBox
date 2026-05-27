@@ -4,38 +4,37 @@ on:
   push:
     branches: [ main, develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    
-    services: # Necesario para Prisma/PostgreSQL
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_PASSWORD: password
-        ports:
-          - 5432:5432
 
     steps:
       - name: Checkout de código
-        [cite_start]uses: actions/checkout@v4 [cite: 15]
+        uses: actions/checkout@v4
 
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
 
       - name: Instalar dependencias
+        working-directory: backend
         run: npm ci
 
       - name: Generar cliente de Prisma
+        working-directory: backend
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: npx prisma generate
 
       - name: Ejecutar Linter
-        [cite_start]run: npm run lint [cite: 16]
+        working-directory: backend
+        run: npm run lint
 
       - name: Ejecutar Tests
-        [cite_start]run: npm test [cite: 16]
+        working-directory: backend
+        run: npm test
