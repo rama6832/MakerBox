@@ -1,4 +1,5 @@
 const validarEmail = require('./utils/validarEmail');
+const validarPassword = require('./utils/validarPassword');
 
 // ─── Mocks ────────────────────────────────────────────────────────────────────
 
@@ -61,6 +62,38 @@ describe('validarEmail', () => {
 
   test('retorna false si tiene espacios', () => {
     expect(validarEmail('usua rio@correo.com')).toBe(false);
+  });
+});
+
+// ─── validarPassword ─────────────────────────────────────────────────────────
+
+describe('validarPassword', () => {
+  test('retorna true para una contraseña válida', () => {
+    expect(validarPassword('segura123')).toBe(true);
+  });
+
+  test('retorna true para contraseña con caracteres especiales', () => {
+    expect(validarPassword('S3gur@!')).toBe(true);
+  });
+
+  test('retorna false si tiene menos de 6 caracteres', () => {
+    expect(validarPassword('abc')).toBe(false);
+  });
+
+  test('retorna false si supera los 100 caracteres', () => {
+    expect(validarPassword('a'.repeat(101))).toBe(false);
+  });
+
+  test('retorna false si está vacía', () => {
+    expect(validarPassword('')).toBe(false);
+  });
+
+  test('retorna false si es null', () => {
+    expect(validarPassword(null)).toBe(false);
+  });
+
+  test('retorna false si tiene espacios', () => {
+    expect(validarPassword('mi password')).toBe(false);
   });
 });
 
