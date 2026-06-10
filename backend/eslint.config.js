@@ -1,4 +1,5 @@
 const js = require('@eslint/js');
+const eslintConfigPrettier = require('eslint-config-prettier');
 
 module.exports = [
   js.configs.recommended,
@@ -21,12 +22,8 @@ module.exports = [
     rules: {
       'no-unused-vars': 'warn',
       'no-console': 'off',
-      'camelcase': ['error', {properties: 'never'}],
-      'object-curly-spacing': ['error', 'never'],
-      'semi': ['error', 'always'],
-      'quotes': ['error', 'single'],
-      'no-trailing-spaces': 'error',
-      'eol-last': ['error', 'always'],
+      camelcase: ['error', {properties: 'never'}],
     },
   },
+  eslintConfigPrettier,
 ];
