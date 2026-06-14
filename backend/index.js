@@ -9,9 +9,25 @@ const PORT = process.env.PORT || 3000;
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: (origin, callback) => {
+      const allowed = [
+        process.env.FRONTEND_URL,
+        'http://localhost:5173',
+      ].filter(Boolean);
+
+      if (
+        !origin ||
+        allowed.includes(origin) ||
+        origin.endsWith('vercel.app')
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error('No permitido por CORS'));
+      }
+    },
   }),
 );
+
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
