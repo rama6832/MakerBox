@@ -24,13 +24,14 @@ export default function Login() {
   const [registerError, setRegisterError] = useState('');
   const [registerSuccess, setRegisterSuccess] = useState('');
   const [registerLoading, setRegisterLoading] = useState(false);
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoginError('');
     setLoginLoading(true);
     try {
-      const res = await fetch('http://localhost:3000/api/auth/login', {
+      const res = await fetch(`${API_URL}/api/auth/login`, { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: loginEmail, password: loginPassword }),
@@ -62,7 +63,7 @@ export default function Login() {
 
     setRegisterLoading(true);
     try {
-      const res = await fetch('http://localhost:3000/api/auth/registro', {
+      const res = await fetch(`${API_URL}/api/auth/registro`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
