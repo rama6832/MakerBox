@@ -31,15 +31,20 @@ export default function Login() {
     setLoginError('');
     setLoginLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/auth/login`, { 
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email: loginEmail, password: loginPassword}),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.mensaje || 'Error al iniciar sesión');
       localStorage.setItem('token', data.token);
-      navigate('/');
+      localStorage.setItem('rol', data.usuario.rol);
+      if (data.usuario.rol === 'ADMINISTRADOR') {
+        navigate('/admin/usuarios');
+      } else {
+        navigate('/');
+      }
     } catch (err) {
       setLoginError(err.message);
     } finally {
