@@ -26,4 +26,12 @@ const soloAdmin = (req, res, next) => {
   next();
 };
 
-module.exports = {verificarToken, soloAdmin};
+const soloAyudante = (req, res, next) => {
+  const rolesPermitidos = ['AYUDANTE', 'ADMINISTRADOR'];
+  if (!rolesPermitidos.includes(req.usuario?.rol)) {
+    return res.status(403).json({mensaje: 'Acceso denegado'});
+  }
+  next();
+};
+
+module.exports = {verificarToken, soloAdmin, soloAyudante};

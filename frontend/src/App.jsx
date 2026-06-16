@@ -4,6 +4,8 @@ import Login from './pages/Login';
 import Proyectos from './pages/Proyectos';
 import Impresion from './pages/Impresion';
 import AdminUsuarios from './pages/AdminUsuarios';
+import MisSolicitudes from './pages/MisSolicitudes';
+import GestionSolicitudes from './pages/GestionSolicitudes';
 
 export default function App() {
   return (
@@ -14,6 +16,8 @@ export default function App() {
         <Route path="/proyectos" element={<Proyectos />} />
         <Route path="/impresion" element={<Impresion />} />
         <Route path="/admin/usuarios" element={<AdminUsuarios />} />
+        <Route path="/mis-solicitudes" element={<MisSolicitudes />} />
+        <Route path="/ayudante/solicitudes" element={<GestionSolicitudes />} />
       </Routes>
     </BrowserRouter>
   );

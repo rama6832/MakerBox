@@ -42,8 +42,10 @@ export default function Login() {
       localStorage.setItem('rol', data.usuario.rol);
       if (data.usuario.rol === 'ADMINISTRADOR') {
         navigate('/admin/usuarios');
+      } else if (data.usuario.rol === 'AYUDANTE') {
+        navigate('/ayudante/solicitudes');
       } else {
-        navigate('/');
+        navigate('/mis-solicitudes');
       }
     } catch (err) {
       setLoginError(err.message);
