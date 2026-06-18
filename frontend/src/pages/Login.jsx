@@ -26,33 +26,36 @@ export default function Login() {
   const [registerLoading, setRegisterLoading] = useState(false);
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoginError('');
-    setLoginLoading(true);
-    try {
-      const res = await fetch(`${API_URL}/api/auth/login`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({email: loginEmail, password: loginPassword}),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.mensaje || 'Error al iniciar sesión');
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('rol', data.usuario.rol);
-      if (data.usuario.rol === 'ADMINISTRADOR') {
-        navigate('/admin/usuarios');
-      } else if (data.usuario.rol === 'AYUDANTE') {
-        navigate('/ayudante/solicitudes');
-      } else {
-        navigate('/mis-solicitudes');
-      }
-    } catch (err) {
-      setLoginError(err.message);
-    } finally {
-      setLoginLoading(false);
+const handleLogin = async (e) => {
+  e.preventDefault();
+  setLoginError('');
+  setLoginLoading(true);
+  try {
+    const res = await fetch(`${API_URL}/api/auth/login`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email: loginEmail, password: loginPassword}),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.mensaje || 'Error al iniciar sesión');
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('rol', data.usuario.rol);
+    localStorage.setItem('nombre', data.usuario.nombre);
+    if (data.usuario.rol === 'ADMINISTRADOR') {
+      navigate('/admin/usuarios');
+    } else if (data.usuario.rol === 'AYUDANTE') {
+      navigate('/ayudante/solicitudes');
+    } else if (data.usuario.rol === 'PROFESOR') {
+      navigate('/profesor/cursos');
+    } else {
+      navigate('/mis-solicitudes');
     }
-  };
+  } catch (err) {
+    setLoginError(err.message);
+  } finally {
+    setLoginLoading(false);
+  }
+};
 
   const handleRegister = async (e) => {
     e.preventDefault();

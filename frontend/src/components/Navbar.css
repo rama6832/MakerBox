@@ -21,14 +21,9 @@
   gap: 10px;
 }
 
-.logo-icon {
-  width: 26px;
-  height: 26px;
-  flex-shrink: 0;
-}
-
-.logo-maker { color: #5c35b8; }
-.logo-box   { color: #c0357a; }
+.logo-icon {width: 26px; height: 26px; flex-shrink: 0;}
+.logo-maker {color: #5c35b8;}
+.logo-box   {color: #c0357a;}
 
 .nav-links {
   display: flex;
@@ -48,9 +43,8 @@
   transition: color 0.2s;
 }
 
-.nav-link:hover { color: #5c35b8; }
-
-.nav-active { color: #5c35b8 !important; }
+.nav-link:hover {color: #5c35b8;}
+.nav-active {color: #5c35b8 !important;}
 
 .nav-btn-login {
   background: #5c35b8;
@@ -65,3 +59,79 @@
   background: #4a2799;
   transform: scale(1.02);
 }
+
+/* User menu */
+.nav-user-wrapper {position: relative;}
+
+.nav-user-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 0.5px solid rgba(92, 53, 184, 0.2);
+  border-radius: 999px;
+  padding: 5px 12px 5px 5px;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(26, 16, 53, 0.75);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.nav-user-btn:hover {
+  border-color: #5c35b8;
+  background: rgba(92, 53, 184, 0.04);
+}
+
+.nav-user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #5c35b8;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.nav-user-name {max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: #fff;
+  border: 0.5px solid rgba(92, 53, 184, 0.15);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(26, 16, 53, 0.1);
+  min-width: 180px;
+  overflow: hidden;
+  z-index: 200;
+}
+
+.nav-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 11px 16px;
+  font-size: 14px;
+  font-family: 'Space Grotesk', sans-serif;
+  color: rgba(26, 16, 53, 0.75);
+  text-decoration: none;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.nav-dropdown-item:hover {background: rgba(92, 53, 184, 0.05); color: #5c35b8;}
+
+.nav-dropdown-divider {height: 0.5px; background: rgba(92, 53, 184, 0.1); margin: 4px 0;}
+
+.nav-dropdown-logout {color: #c0357a !important;}
+.nav-dropdown-logout:hover {background: rgba(192, 53, 122, 0.05) !important;}

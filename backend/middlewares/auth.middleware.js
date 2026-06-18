@@ -5,11 +5,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'secreto_desarrollo';
 const verificarToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-
-  if (!token) {
-    return res.status(401).json({mensaje: 'Token requerido'});
-  }
-
+  if (!token) return res.status(401).json({mensaje: 'Token requerido'});
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     req.usuario = decoded;
@@ -20,18 +16,18 @@ const verificarToken = (req, res, next) => {
 };
 
 const soloAdmin = (req, res, next) => {
-  if (req.usuario?.rol !== 'ADMINISTRADOR') {
-    return res.status(403).json({mensaje: 'Acceso denegado'});
-  }
+  if (req.usuario?.rol !== 'ADMINISTRADOR') return res.status(403).json({mensaje: 'Acceso denegado'});
   next();
 };
 
 const soloAyudante = (req, res, next) => {
-  const rolesPermitidos = ['AYUDANTE', 'ADMINISTRADOR'];
-  if (!rolesPermitidos.includes(req.usuario?.rol)) {
-    return res.status(403).json({mensaje: 'Acceso denegado'});
-  }
+  if (!['AYUDANTE', 'ADMINISTRADOR'].includes(req.usuario?.rol)) return res.status(403).json({mensaje: 'Acceso denegado'});
   next();
 };
 
-module.exports = {verificarToken, soloAdmin, soloAyudante};
+const soloProfesor = (req, res, next) => {
+  if (!['PROFESOR', 'ADMINISTRADOR'].includes(req.usuario?.rol)) return res.status(403).json({mensaje: 'Acceso denegado'});
+  next();
+};
+
+module.exports = {verificarToken, soloAdmin, soloAyudante, soloProfesor};
