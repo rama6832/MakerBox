@@ -7,6 +7,10 @@ export default defineConfig({
     path: 'prisma/migrations',
   },
   datasource: {
-    url: process.env['DATABASE_URL'],
+    url: process.env.DATABASE_URL!,
+    adapter: () => {
+      const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+      return new PrismaPg(pool);
+    },
   },
 });

@@ -11,7 +11,17 @@ const cursosRoutes = require('./routes/cursos.routes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors({origin: 'http://localhost:5173'}));
+app.options('*', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+  );
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.sendStatus(200);
+});
+
+app.use(cors({origin: '*'}));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
@@ -19,6 +29,10 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/proyectos', proyectosRoutes);
 app.use('/api/pedidos', pedidosRoutes);
 app.use('/api/cursos', cursosRoutes);
+
+app.get('/', (req, res) => {
+  res.json({ok: true, mensaje: 'Backend funcionando'});
+});
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
