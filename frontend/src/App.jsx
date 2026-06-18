@@ -6,6 +6,7 @@ import Impresion from './pages/Impresion';
 import AdminUsuarios from './pages/AdminUsuarios';
 import MisSolicitudes from './pages/MisSolicitudes';
 import GestionSolicitudes from './pages/GestionSolicitudes';
+import ProfesorCursos from './pages/ProfesorCursos';
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/admin/usuarios" element={<AdminUsuarios />} />
         <Route path="/mis-solicitudes" element={<MisSolicitudes />} />
         <Route path="/ayudante/solicitudes" element={<GestionSolicitudes />} />
+        <Route path="/profesor/cursos" element={<ProfesorCursos />} />
       </Routes>
     </BrowserRouter>
   );

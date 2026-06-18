@@ -34,8 +34,10 @@ model Usuario {
   creadoEn      DateTime    @default(now())
   actualizadoEn DateTime    @updatedAt
 
-  proyectos     Proyecto[]
-  pedidos       Pedido[]
+  proyectos         Proyecto[]
+  pedidos           Pedido[]
+  cursosComoProfesor Curso[]
+  cursosComoEstudiante CursoEstudiante[]
 }
 
 model Proyecto {
@@ -73,4 +75,34 @@ model Pedido {
 
   proyecto            Proyecto  @relation(fields: [proyectoId], references: [id])
   proyectoId          String
+
+  curso               Curso?    @relation(fields: [cursoId], references: [id])
+  cursoId             String?
+}
+
+model Curso {
+  id            String    @id @default(uuid())
+  nombre        String
+  descripcion   String?
+  semestre      String
+  creadoEn      DateTime  @default(now())
+
+  profesor      Usuario   @relation(fields: [profesorId], references: [id])
+  profesorId    String
+
+  estudiantes   CursoEstudiante[]
+  pedidos       Pedido[]
+}
+
+model CursoEstudiante {
+  id            String    @id @default(uuid())
+  creadoEn      DateTime  @default(now())
+
+  curso         Curso     @relation(fields: [cursoId], references: [id])
+  cursoId       String
+
+  estudiante    Usuario   @relation(fields: [estudianteId], references: [id])
+  estudianteId  String
+
+  @@unique([cursoId, estudianteId])
 }
