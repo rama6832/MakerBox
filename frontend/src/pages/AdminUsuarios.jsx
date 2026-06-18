@@ -31,7 +31,7 @@ export default function AdminUsuarios() {
 
   const fetchUsuarios = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/admin/usuarios', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/admin/usuarios`, {
         headers: {Authorization: `Bearer ${token}`},
       });
       if (res.status === 403 || res.status === 401) {
@@ -50,7 +50,7 @@ export default function AdminUsuarios() {
   const cambiarRol = async (id, nuevoRol) => {
     setCambiando(id);
     try {
-      const res = await fetch(`http://localhost:3000/api/admin/usuarios/${id}/rol`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/admin/usuarios/${id}/rol`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
