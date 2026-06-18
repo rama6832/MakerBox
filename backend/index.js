@@ -11,26 +11,17 @@ const cursosRoutes = require('./routes/cursos.routes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      const allowed = [
-        process.env.FRONTEND_URL,
-        'http://localhost:5173',
-      ].filter(Boolean);
-
-      if (
-        !origin ||
-        allowed.includes(origin) ||
-        origin.endsWith('vercel.app')
-      ) {
-        callback(null, true);
-      } else {
-        callback(new Error('No permitido por CORS'));
-      }
-    },
-  }),
-);
+// Manejo manual del preflight
+app.options('*', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+  );
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.sendStatus(200);
+});
+app.use(cors({origin: '*'}));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
