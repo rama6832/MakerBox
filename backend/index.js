@@ -39,6 +39,10 @@ app.use('/api/proyectos', proyectosRoutes);
 app.use('/api/pedidos', pedidosRoutes);
 app.use('/api/cursos', cursosRoutes);
 
+app.get('/', (req, res) => {
+  res.json({ok: true, mensaje: 'Backend funcionando'});
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
