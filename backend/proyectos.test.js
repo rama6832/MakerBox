@@ -24,7 +24,7 @@ describe('crearProyecto', () => {
 
   test('crea un proyecto correctamente y retorna 201', async () => {
     const req = {
-      body: {titulo: 'Robot 3D', descripcion: 'Prototipo de robot', categoria: 'Mecánica'},
+      body: {titulo: 'Robot 3D', descripcion: 'Prototipo de robot', categoria: 'Mecánico'},
       usuario: {id: 'user-1'},
     };
     const res = mockRes();
