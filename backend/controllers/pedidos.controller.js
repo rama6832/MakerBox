@@ -1,10 +1,19 @@
 const prisma = require('../lib/prisma');
+const {crearNotificacion} = require('./notificaciones.controller');
 
 const ESTADOS_VALIDOS = ['PENDIENTE', 'APROBADO', 'RECHAZADO', 'EN_PROCESO', 'FINALIZADO'];
 
+const ESTADO_LABEL = {
+  PENDIENTE: 'pendiente',
+  APROBADO: 'aprobada',
+  RECHAZADO: 'rechazada',
+  EN_PROCESO: 'en proceso',
+  FINALIZADO: 'finalizada',
+};
+
 // POST /api/pedidos
 const crearPedido = async (req, res) => {
-  const {proyectoId, material, color, calidad, archivoStl, comentario} = req.body;
+  const {proyectoId, material, color, calidad, archivoStl, archivoStlUrl, comentario, cursoId} = req.body;
   const usuarioId = req.usuario.id;
 
   if (!proyectoId || !material || !archivoStl) {
@@ -21,7 +30,7 @@ const crearPedido = async (req, res) => {
     }
 
     const pedido = await prisma.pedido.create({
-      data: {proyectoId, usuarioId, material, color, calidad, archivoStl, comentario},
+      data: {proyectoId, usuarioId, material, color, calidad, archivoStl, archivoStlUrl, comentario, cursoId},
       include: {proyecto: {select: {titulo: true}}},
     });
     return res.status(201).json(pedido);
@@ -64,6 +73,24 @@ const getTodosPedidos = async (req, res) => {
   }
 };
 
+// GET /api/pedidos/finalizados (público, cualquier rol autenticado)
+const getPedidosFinalizados = async (req, res) => {
+  try {
+    const pedidos = await prisma.pedido.findMany({
+      where: {estado: 'FINALIZADO'},
+      include: {
+        proyecto: {select: {titulo: true, descripcion: true, categoria: true, imagenUrl: true}},
+        usuario: {select: {nombre: true, apellido: true}},
+      },
+      orderBy: {actualizadoEn: 'desc'},
+    });
+    return res.json(pedidos);
+  } catch (error) {
+    console.error('Error al obtener pedidos finalizados:', error);
+    return res.status(500).json({mensaje: 'Error interno del servidor'});
+  }
+};
+
 // PATCH /api/pedidos/:id/estado (solo ayudante)
 const cambiarEstado = async (req, res) => {
   const {id} = req.params;
@@ -87,10 +114,13 @@ const cambiarEstado = async (req, res) => {
         motivoRechazo: estado === 'RECHAZADO' ? motivoRechazo : null,
       },
       include: {
-        usuario: {select: {nombre: true, email: true}},
+        usuario: {select: {id: true, nombre: true, email: true}},
         proyecto: {select: {titulo: true}},
       },
     });
+
+    const mensaje = `Tu solicitud de impresión "${actualizado.proyecto.titulo}" fue movida a ${ESTADO_LABEL[estado]}`;
+    await crearNotificacion(actualizado.usuario.id, mensaje);
 
     return res.json({
       mensaje: 'Estado actualizado correctamente',
@@ -102,4 +132,4 @@ const cambiarEstado = async (req, res) => {
   }
 };
 
-module.exports = {crearPedido, getMisPedidos, getTodosPedidos, cambiarEstado};
+module.exports = {crearPedido, getMisPedidos, getTodosPedidos, getPedidosFinalizados, cambiarEstado};

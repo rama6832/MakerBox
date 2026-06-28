@@ -34,10 +34,12 @@ model Usuario {
   creadoEn      DateTime    @default(now())
   actualizadoEn DateTime    @updatedAt
 
-  proyectos         Proyecto[]
-  pedidos           Pedido[]
-  cursosComoProfesor Curso[]
+  proyectos            Proyecto[]
+  pedidos              Pedido[]
+  cursosComoProfesor   Curso[]
   cursosComoEstudiante CursoEstudiante[]
+  notificaciones       Notificacion[]
+  gruposComoEstudiante GrupoEstudiante[]
 }
 
 model Proyecto {
@@ -62,13 +64,13 @@ model Pedido {
   color               String?
   calidad             String?
   archivoStl          String
-  archivoDiseño       String?
+  archivoStlUrl       String?
   comentario          String?
   estado              EstadoPedido @default(PENDIENTE)
   observacionAyudante String?
   motivoRechazo       String?
   creadoEn            DateTime     @default(now())
-  actualizadoEn       DateTime     @updatedAt
+  actualizadoEn        DateTime     @updatedAt
 
   usuario             Usuario   @relation(fields: [usuarioId], references: [id])
   usuarioId           String
@@ -91,6 +93,7 @@ model Curso {
   profesorId    String
 
   estudiantes   CursoEstudiante[]
+  grupos        Grupo[]
   pedidos       Pedido[]
 }
 
@@ -105,4 +108,48 @@ model CursoEstudiante {
   estudianteId  String
 
   @@unique([cursoId, estudianteId])
+}
+
+model Grupo {
+  id            String    @id @default(uuid())
+  nombre        String
+  creadoEn      DateTime  @default(now())
+
+  curso         Curso     @relation(fields: [cursoId], references: [id])
+  cursoId       String
+
+  estudiantes   GrupoEstudiante[]
+}
+
+model GrupoEstudiante {
+  id            String    @id @default(uuid())
+  creadoEn      DateTime  @default(now())
+
+  grupo         Grupo     @relation(fields: [grupoId], references: [id])
+  grupoId       String
+
+  estudiante    Usuario   @relation(fields: [estudianteId], references: [id])
+  estudianteId  String
+
+  @@unique([grupoId, estudianteId])
+}
+
+model Notificacion {
+  id            String    @id @default(uuid())
+  mensaje       String
+  leida         Boolean   @default(false)
+  creadoEn      DateTime  @default(now())
+
+  usuario       Usuario   @relation(fields: [usuarioId], references: [id])
+  usuarioId     String
+}
+
+model Articulo {
+  id            String    @id @default(uuid())
+  nombre        String
+  stockActual   Int       @default(0)
+  stockMinimo   Int       @default(5)
+  unidadMedida  String    @default("unidad")
+  creadoEn      DateTime  @default(now())
+  actualizadoEn DateTime  @updatedAt
 }
