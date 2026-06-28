@@ -38,27 +38,31 @@ export default function MisSolicitudes() {
   const [calidad, setCalidad] = useState('');
   const [archivoFile, setArchivoFile] = useState(null);
   const [comentario, setComentario] = useState('');
-
-  const fetchData = async () => {
-  setLoading(true);
-  try {
-    const [resProyectos, resPedidos] = await Promise.all([
-      fetch(`${API_URL}/api/proyectos/mis-proyectos`, {headers: {Authorization: `Bearer ${token}`}}),
-      fetch(`${API_URL}/api/pedidos/mis-pedidos`, {headers: {Authorization: `Bearer ${token}`}}),
-    ]);
-    setProyectos(await resProyectos.json());
-    setPedidos(await resPedidos.json());
-  } catch {
-    setError('Error al cargar datos');
-  } finally {
-    setLoading(false);
-  }
-  };
+  const [cursoId, setCursoId] = useState('');
+  const [cursosEstudiante, setCursosEstudiante] = useState([]);
 
   useEffect(() => {
     if (!token) {navigate('/login'); return;}
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const [resProyectos, resPedidos, resCursos] = await Promise.all([
+        fetch(`${API_URL}/api/proyectos/mis-proyectos`, {headers: {Authorization: `Bearer ${token}`}}),
+        fetch(`${API_URL}/api/pedidos/mis-pedidos`, {headers: {Authorization: `Bearer ${token}`}}),
+        fetch(`${API_URL}/api/cursos/mis-cursos-estudiante`, {headers: {Authorization: `Bearer ${token}`}}),
+      ]);
+      setProyectos(await resProyectos.json());
+      setPedidos(await resPedidos.json());
+      setCursosEstudiante(await resCursos.json());
+    } catch {
+      setError('Error al cargar datos');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleCrearProyecto = async (e) => {
     e.preventDefault();
@@ -113,6 +117,7 @@ export default function MisSolicitudes() {
           archivoStl: dataUpload.archivoStl,
           archivoStlUrl: dataUpload.archivoStlUrl,
           comentario,
+          cursoId: cursoId || null,
         }),
       });
       const data = await res.json();
@@ -121,7 +126,7 @@ export default function MisSolicitudes() {
       setPedidos(prev => [data, ...prev]);
       setSuccess('Solicitud enviada correctamente');
       setProyectoId(''); setMaterial(''); setColor('');
-      setCalidad(''); setArchivoFile(null); setComentario('');
+      setCalidad(''); setArchivoFile(null); setComentario(''); setCursoId('');
       setShowFormPedido(false);
     } catch (err) {
       setError(err.message);
@@ -189,6 +194,17 @@ export default function MisSolicitudes() {
                   {proyectos.map(p => <option key={p.id} value={p.id}>{p.titulo}</option>)}
                 </select>
               </div>
+              <div className="input-group">
+                <label>Curso (opcional)</label>
+                <select value={cursoId} onChange={e => setCursoId(e.target.value)}>
+                  <option value="">Impresión personal (sin curso)</option>
+                  {cursosEstudiante.map(c => (
+                    <option key={c.id} value={c.id}>
+                      {c.nombre} {c.grupo ? `· ${c.grupo.nombre}` : ''}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <div className="form-row">
                 <div className="input-group">
                   <label>Material</label>
@@ -254,6 +270,7 @@ export default function MisSolicitudes() {
                   <div className="pedido-top">
                     <div>
                       <p className="pedido-proyecto">{p.proyecto?.titulo}</p>
+                      {p.curso && <p className="pedido-curso">📚 {p.curso.nombre}</p>}
                       <p className="pedido-material">{p.material} {p.color ? `· ${p.color}` : ''} {p.calidad ? `· ${p.calidad}` : ''}</p>
                       {p.archivoStlUrl ? (
                         <a href={p.archivoStlUrl} target="_blank" rel="noopener noreferrer" className="pedido-archivo-link">

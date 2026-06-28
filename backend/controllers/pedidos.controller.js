@@ -29,9 +29,22 @@ const crearPedido = async (req, res) => {
       return res.status(403).json({mensaje: 'No puedes crear pedidos en proyectos de otros usuarios'});
     }
 
+    // Si se especifica un curso, validar que el estudiante esté inscrito en él
+    if (cursoId) {
+      const inscrito = await prisma.cursoEstudiante.findUnique({
+        where: {cursoId_estudianteId: {cursoId, estudianteId: usuarioId}},
+      });
+      if (!inscrito) {
+        return res.status(403).json({mensaje: 'No estás inscrito en ese curso'});
+      }
+    }
+
     const pedido = await prisma.pedido.create({
-      data: {proyectoId, usuarioId, material, color, calidad, archivoStl, archivoStlUrl, comentario, cursoId},
-      include: {proyecto: {select: {titulo: true}}},
+      data: {proyectoId, usuarioId, material, color, calidad, archivoStl, archivoStlUrl, comentario, cursoId: cursoId || null},
+      include: {
+        proyecto: {select: {titulo: true}},
+        curso: {select: {nombre: true}},
+      },
     });
     return res.status(201).json(pedido);
   } catch (error) {
@@ -46,7 +59,10 @@ const getMisPedidos = async (req, res) => {
   try {
     const pedidos = await prisma.pedido.findMany({
       where: {usuarioId},
-      include: {proyecto: {select: {titulo: true}}},
+      include: {
+        proyecto: {select: {titulo: true}},
+        curso: {select: {nombre: true}},
+      },
       orderBy: {creadoEn: 'desc'},
     });
     return res.json(pedidos);
@@ -63,12 +79,38 @@ const getTodosPedidos = async (req, res) => {
       include: {
         proyecto: {select: {titulo: true}},
         usuario: {select: {nombre: true, apellido: true, email: true}},
+        curso: {select: {nombre: true}},
       },
       orderBy: {creadoEn: 'desc'},
     });
     return res.json(pedidos);
   } catch (error) {
     console.error('Error al obtener pedidos:', error);
+    return res.status(500).json({mensaje: 'Error interno del servidor'});
+  }
+};
+
+// GET /api/pedidos/curso/:cursoId (solo profesor, debe ser su curso)
+const getPedidosPorCurso = async (req, res) => {
+  const {cursoId} = req.params;
+  const profesorId = req.usuario.id;
+
+  try {
+    const curso = await prisma.curso.findUnique({where: {id: cursoId}});
+    if (!curso) return res.status(404).json({mensaje: 'Curso no encontrado'});
+    if (curso.profesorId !== profesorId) return res.status(403).json({mensaje: 'Acceso denegado'});
+
+    const pedidos = await prisma.pedido.findMany({
+      where: {cursoId},
+      include: {
+        proyecto: {select: {titulo: true}},
+        usuario: {select: {nombre: true, apellido: true, email: true}},
+      },
+      orderBy: {creadoEn: 'desc'},
+    });
+    return res.json(pedidos);
+  } catch (error) {
+    console.error('Error al obtener pedidos del curso:', error);
     return res.status(500).json({mensaje: 'Error interno del servidor'});
   }
 };
@@ -132,4 +174,11 @@ const cambiarEstado = async (req, res) => {
   }
 };
 
-module.exports = {crearPedido, getMisPedidos, getTodosPedidos, getPedidosFinalizados, cambiarEstado};
+module.exports = {
+  crearPedido,
+  getMisPedidos,
+  getTodosPedidos,
+  getPedidosPorCurso,
+  getPedidosFinalizados,
+  cambiarEstado,
+};

@@ -231,3 +231,145 @@
 }
 
 .btn-eliminar:hover {background: rgba(192,53,122,0.08);}
+
+/* Sub tabs */
+.sub-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 3px;
+  margin: 1rem 0;
+}
+
+.sub-tab {
+  flex: 1;
+  padding: 7px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sub-tab--active {
+  background: #fff;
+  color: var(--purple);
+  font-weight: 600;
+}
+
+/* CSV upload */
+.csv-upload {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 12px;
+  margin: 1rem 0;
+}
+
+.csv-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.csv-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.csv-row input[type="file"] {
+  flex: 1;
+  font-size: 12px;
+}
+
+.csv-resultado {
+  font-size: 12px;
+  color: #0f6e56;
+  margin-top: 8px;
+}
+
+/* Grupos */
+.btn-secondary-small {
+  background: var(--purple-light);
+  color: var(--purple);
+  border: none;
+  padding: 7px 14px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+.grupo-form-inline {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.grupo-form-inline input {
+  flex: 1;
+  background: var(--bg);
+  border: 0.5px solid var(--border);
+  border-radius: 7px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: var(--font-body);
+  outline: none;
+}
+
+.btn-cancel-small {
+  background: none;
+  border: 0.5px solid var(--border);
+  color: var(--text-muted);
+  padding: 7px 14px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+.grupos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.grupo-card {
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.grupo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.grupo-nombre {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Solicitudes por curso */
+.solicitudes-curso-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.solicitud-curso-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
