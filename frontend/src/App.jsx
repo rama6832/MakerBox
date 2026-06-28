@@ -7,6 +7,7 @@ import AdminUsuarios from './pages/AdminUsuarios';
 import MisSolicitudes from './pages/MisSolicitudes';
 import GestionSolicitudes from './pages/GestionSolicitudes';
 import ProfesorCursos from './pages/ProfesorCursos';
+import GestionInventario from './pages/GestionInventario';
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/mis-solicitudes" element={<MisSolicitudes />} />
         <Route path="/ayudante/solicitudes" element={<GestionSolicitudes />} />
         <Route path="/profesor/cursos" element={<ProfesorCursos />} />
+        <Route path="/gestion-inventario" element={<GestionInventario />} />
       </Routes>
     </BrowserRouter>
   );

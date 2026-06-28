@@ -1,6 +1,31 @@
 const prisma = require('../lib/prisma');
 const {crearNotificacion} = require('./notificaciones.controller');
 
+const descontarStockSiAplica = async (nombreMaterial) => {
+  try {
+    const articulo = await prisma.articulo.findFirst({where: {nombre: nombreMaterial}});
+    if (!articulo || articulo.stockActual <= 0) return;
+
+    const nuevoStock = articulo.stockActual - 1;
+    const actualizado = await prisma.articulo.update({
+      where: {id: articulo.id},
+      data: {stockActual: nuevoStock},
+    });
+
+    const cruzaHaciaAbajo = articulo.stockActual >= articulo.stockMinimo && actualizado.stockActual < actualizado.stockMinimo;
+    if (cruzaHaciaAbajo) {
+      const responsables = await prisma.usuario.findMany({
+        where: {rol: {in: ['AYUDANTE', 'ADMINISTRADOR']}},
+        select: {id: true},
+      });
+      const mensaje = `Stock bajo: "${actualizado.nombre}" tiene ${actualizado.stockActual} ${actualizado.unidadMedida} (mínimo: ${actualizado.stockMinimo})`;
+      await Promise.all(responsables.map(u => crearNotificacion(u.id, mensaje)));
+    }
+  } catch (error) {
+    console.error('Error al descontar stock:', error);
+  }
+};
+
 const ESTADOS_VALIDOS = ['PENDIENTE', 'APROBADO', 'RECHAZADO', 'EN_PROCESO', 'FINALIZADO'];
 
 const ESTADO_LABEL = {
@@ -46,6 +71,9 @@ const crearPedido = async (req, res) => {
         curso: {select: {nombre: true}},
       },
     });
+
+    await descontarStockSiAplica(material);
+
     return res.status(201).json(pedido);
   } catch (error) {
     console.error('Error al crear pedido:', error);

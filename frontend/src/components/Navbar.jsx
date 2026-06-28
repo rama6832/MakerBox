@@ -40,6 +40,7 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClick);
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!token) return;
     let activo = true;
@@ -78,11 +79,11 @@ export default function Navbar() {
 
   const getLinkDashboard = () => {
     if (rol === 'ADMINISTRADOR') return '/admin/usuarios';
-    if (rol === 'AYUDANTE') return '/gestion-solicitudes';
+    if (rol === 'AYUDANTE') return '/ayudante/solicitudes';
     if (rol === 'PROFESOR') return '/profesor/cursos';
     return '/mis-solicitudes';
   };
-
+  
   const tiempoRelativo = (fecha) => {
     const ahora = new Date();
     const diff = Math.floor((ahora.getTime() - new Date(fecha).getTime()) / 1000);
@@ -120,6 +121,13 @@ export default function Navbar() {
             Galería finalizadas
           </Link>
         </li>
+        {rol === 'AYUDANTE' && (
+          <li>
+            <Link to="/gestion-inventario" className={isActive('/gestion-inventario') ? 'nav-link nav-active' : 'nav-link'}>
+              Inventario
+            </Link>
+          </li>
+        )}
 
         {token && (
           <li className="nav-notif-wrapper" ref={notifRef}>

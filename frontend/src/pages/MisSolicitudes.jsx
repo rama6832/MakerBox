@@ -40,6 +40,8 @@ export default function MisSolicitudes() {
   const [comentario, setComentario] = useState('');
   const [cursoId, setCursoId] = useState('');
   const [cursosEstudiante, setCursosEstudiante] = useState([]);
+  const [materialesDisponibles, setMaterialesDisponibles] = useState([]);
+  const [materialPersonalizado, setMaterialPersonalizado] = useState('');
 
   useEffect(() => {
     if (!token) {navigate('/login'); return;}
@@ -49,14 +51,16 @@ export default function MisSolicitudes() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [resProyectos, resPedidos, resCursos] = await Promise.all([
+      const [resProyectos, resPedidos, resCursos, resMateriales] = await Promise.all([
         fetch(`${API_URL}/api/proyectos/mis-proyectos`, {headers: {Authorization: `Bearer ${token}`}}),
         fetch(`${API_URL}/api/pedidos/mis-pedidos`, {headers: {Authorization: `Bearer ${token}`}}),
         fetch(`${API_URL}/api/cursos/mis-cursos-estudiante`, {headers: {Authorization: `Bearer ${token}`}}),
+        fetch(`${API_URL}/api/inventario/disponibles`, {headers: {Authorization: `Bearer ${token}`}}),
       ]);
       setProyectos(await resProyectos.json());
       setPedidos(await resPedidos.json());
       setCursosEstudiante(await resCursos.json());
+      setMaterialesDisponibles(await resMateriales.json());
     } catch {
       setError('Error al cargar datos');
     } finally {
@@ -93,6 +97,12 @@ export default function MisSolicitudes() {
       return;
     }
 
+    const materialFinal = material === '__otro__' ? materialPersonalizado.trim() : material;
+    if (!materialFinal) {
+      setError('Debes indicar el material a usar');
+      return;
+    }
+
     try {
       // 1. Subir el archivo primero
       setSubiendoArchivo(true);
@@ -113,7 +123,7 @@ export default function MisSolicitudes() {
         method: 'POST',
         headers: {'Content-Type': 'application/json', Authorization: `Bearer ${token}`},
         body: JSON.stringify({
-          proyectoId, material, color, calidad,
+          proyectoId, material: materialFinal, color, calidad,
           archivoStl: dataUpload.archivoStl,
           archivoStlUrl: dataUpload.archivoStlUrl,
           comentario,
@@ -126,7 +136,7 @@ export default function MisSolicitudes() {
       setPedidos(prev => [data, ...prev]);
       setSuccess('Solicitud enviada correctamente');
       setProyectoId(''); setMaterial(''); setColor('');
-      setCalidad(''); setArchivoFile(null); setComentario(''); setCursoId('');
+      setCalidad(''); setArchivoFile(null); setComentario(''); setCursoId(''); setMaterialPersonalizado('');
       setShowFormPedido(false);
     } catch (err) {
       setError(err.message);
@@ -208,7 +218,24 @@ export default function MisSolicitudes() {
               <div className="form-row">
                 <div className="input-group">
                   <label>Material</label>
-                  <input value={material} onChange={e => setMaterial(e.target.value)} placeholder="Ej: PLA, ABS..." required />
+                  <select value={material} onChange={e => setMaterial(e.target.value)} required>
+                    <option value="">Selecciona un material</option>
+                    {materialesDisponibles.map(m => (
+                      <option key={m.id} value={m.nombre}>
+                        {m.nombre} (disponible: {m.stockActual} {m.unidadMedida})
+                      </option>
+                    ))}
+                    <option value="__otro__">Otro (especificar)</option>
+                  </select>
+                  {material === '__otro__' && (
+                    <input
+                      value={materialPersonalizado}
+                      onChange={e => setMaterialPersonalizado(e.target.value)}
+                      placeholder="Escribe el material que necesitas"
+                      style={{marginTop: '8px'}}
+                      required
+                    />
+                  )}
                 </div>
                 <div className="input-group">
                   <label>Color</label>
