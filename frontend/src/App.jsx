@@ -8,6 +8,7 @@ import MisSolicitudes from './pages/MisSolicitudes';
 import GestionSolicitudes from './pages/GestionSolicitudes';
 import ProfesorCursos from './pages/ProfesorCursos';
 import GestionInventario from './pages/GestionInventario';
+import Finalizadas from './pages/Finalizadas';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/ayudante/solicitudes" element={<GestionSolicitudes />} />
         <Route path="/profesor/cursos" element={<ProfesorCursos />} />
         <Route path="/gestion-inventario" element={<GestionInventario />} />
+        <Route path="/finalizadas" element={<Finalizadas />} />
       </Routes>
     </BrowserRouter>
   );
