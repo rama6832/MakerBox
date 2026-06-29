@@ -7,7 +7,7 @@
     "postinstall": "prisma generate",
     "test": "jest",
     "lint": "eslint .",
-    "test:unit": "jest --testPathPatterns index.test proyectos.test pedidos.test cursos.test",
+    "test:unit": "jest --testPathPatterns index.test proyectos.test pedidos.test cursos.test notificaciones.test archivos.test inventario.test stock-descuento.test grupos-csv.test cursos-estudiante.test pedidos-curso-finalizados.test",
     "test:integration": "jest --testPathPatterns integration"
   },
   "jest": {
@@ -31,11 +31,13 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
+    "@supabase/supabase-js": "^2.108.2",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
+    "multer": "^2.2.0",
     "pg": "^8.20.0",
     "resend": "^6.12.4"
   },
