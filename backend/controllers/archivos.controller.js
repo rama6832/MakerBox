@@ -1,4 +1,5 @@
 const supabase = require('../lib/supabase');
+const validartamañoArchivo = require('../utils/validartamañoArchivo');
 
 const BUCKET = 'archivos-stl';
 
@@ -6,6 +7,9 @@ const BUCKET = 'archivos-stl';
 const subirArchivo = async (req, res) => {
   if (!req.file) {
     return res.status(400).json({mensaje: 'No se recibió ningún archivo'});
+  }
+  if (!validartamañoArchivo(req.file.size)) {
+    return res.status(400).json({mensaje: 'El archivo excede el tamaño máximo permitido de 50 MB'});
   }
 
   const usuarioId = req.usuario.id;
