@@ -13,6 +13,7 @@ module.exports = [
         process: 'readonly',
         console: 'readonly',
         jest: 'readonly',
+        Buffer: 'readonly',
         describe: 'readonly',
         test: 'readonly',
         expect: 'readonly',
