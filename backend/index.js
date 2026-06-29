@@ -7,6 +7,9 @@ const adminRoutes = require('./routes/admin.routes');
 const proyectosRoutes = require('./routes/proyectos.routes');
 const pedidosRoutes = require('./routes/pedidos.routes');
 const cursosRoutes = require('./routes/cursos.routes');
+const notificacionesRoutes = require('./routes/notificaciones.routes');
+const archivosRoutes = require('./routes/archivos.routes');
+const inventarioRoutes = require('./routes/inventario.routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,6 +22,9 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/proyectos', proyectosRoutes);
 app.use('/api/pedidos', pedidosRoutes);
 app.use('/api/cursos', cursosRoutes);
+app.use('/api/notificaciones', notificacionesRoutes);
+app.use('/api/archivos', archivosRoutes);
+app.use('/api/inventario', inventarioRoutes);
 
 app.get('/', (req, res) => {
   res.json({ok: true, mensaje: 'Backend funcionando'});

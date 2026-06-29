@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for controllers/proyectos.controller.js</title>
+    <title>Code coverage report for controllers/archivos.controller.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">controllers</a> proyectos.controller.js</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">controllers</a> archivos.controller.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -32,14 +32,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
@@ -101,27 +101,18 @@
 <a name='L36'></a><a href='#L36'>36</a>
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -129,54 +120,75 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const prisma = <span class="cstat-no" title="statement not covered" >require('../lib/prisma');</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const supabase = <span class="cstat-no" title="statement not covered" >require('../lib/supabase');</span>
 &nbsp;
-// POST /api/proyectos
-const crearProyecto = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {</span>
-  const {titulo, descripcion, categoria} = <span class="cstat-no" title="statement not covered" >req.body;</span>
-  const autorId = <span class="cstat-no" title="statement not covered" >req.usuario.id;</span>
+const BUCKET = <span class="cstat-no" title="statement not covered" >'archivos-stl';</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  if (!titulo || !descripcion || !categoria) {</span>
-<span class="cstat-no" title="statement not covered" >    return res.status(400).json({mensaje: 'Todos los campos son obligatorios'});</span>
+// POST /api/archivos/stl
+const subirArchivo = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  if (!req.file) {</span>
+<span class="cstat-no" title="statement not covered" >    return res.status(400).json({mensaje: 'No se recibió ningún archivo'});</span>
   }
 &nbsp;
+  const usuarioId = <span class="cstat-no" title="statement not covered" >req.usuario.id;</span>
+  const nombreOriginal = <span class="cstat-no" title="statement not covered" >req.file.originalname;</span>
+  const extension = <span class="cstat-no" title="statement not covered" >nombreOriginal.slice(nombreOriginal.lastIndexOf('.'));</span>
+  const nombreUnico = <span class="cstat-no" title="statement not covered" >`${usuarioId}/${Date.now()}${extension}`;</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >  try {</span>
-    const proyecto = <span class="cstat-no" title="statement not covered" >await prisma.proyecto.create({</span>
-      data: {titulo, descripcion, categoria, autorId},
+    const {error} = <span class="cstat-no" title="statement not covered" >await supabase.storage</span>
+      .from(BUCKET)
+      .upload(nombreUnico, req.file.buffer, {
+        contentType: req.file.mimetype || 'application/octet-stream',
+        upsert: false,
+      });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (error) {</span>
+<span class="cstat-no" title="statement not covered" >      console.error('Error al subir a Supabase Storage:', error);</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(500).json({mensaje: 'Error al subir el archivo'});</span>
+    }
+&nbsp;
+    const {data} = <span class="cstat-no" title="statement not covered" >supabase.storage.from(BUCKET).getPublicUrl(nombreUnico);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return res.status(201).json({</span>
+      mensaje: 'Archivo subido correctamente',
+      archivoStl: nombreOriginal,
+      archivoStlUrl: data.publicUrl,
     });
-<span class="cstat-no" title="statement not covered" >    return res.status(201).json(proyecto);</span>
   } catch (error) {
-<span class="cstat-no" title="statement not covered" >    console.error('Error al crear proyecto:', error);</span>
+<span class="cstat-no" title="statement not covered" >    console.error('Error al subir archivo:', error);</span>
 <span class="cstat-no" title="statement not covered" >    return res.status(500).json({mensaje: 'Error interno del servidor'});</span>
   }
 };
 &nbsp;
-// GET /api/proyectos/mis-proyectos
-const getMisProyectos = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {</span>
-  const autorId = <span class="cstat-no" title="statement not covered" >req.usuario.id;</span>
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const proyectos = <span class="cstat-no" title="statement not covered" >await prisma.proyecto.findMany({</span>
-      where: {autorId},
-      orderBy: {creadoEn: 'desc'},
-    });
-<span class="cstat-no" title="statement not covered" >    return res.json(proyectos);</span>
-  } catch (error) {
-<span class="cstat-no" title="statement not covered" >    console.error('Error al obtener proyectos:', error);</span>
-<span class="cstat-no" title="statement not covered" >    return res.status(500).json({mensaje: 'Error interno del servidor'});</span>
-  }
-};
-&nbsp;
-<span class="cstat-no" title="statement not covered" >module.exports = {crearProyecto, getMisProyectos};</span>
+<span class="cstat-no" title="statement not covered" >module.exports = {subirArchivo};</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
