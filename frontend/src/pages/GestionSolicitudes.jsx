@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import Toast from '../components/Toast';
 import './GestionSolicitudes.css';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
@@ -26,6 +27,7 @@ export default function GestionSolicitudes() {
   const [cambiando, setCambiando] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [toast, setToast] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
@@ -67,6 +69,7 @@ export default function GestionSolicitudes() {
       if (!res.ok) throw new Error(data.mensaje);
       setPedidos(prev => prev.map(p => p.id === pedidoActivo.id ? {...p, estado: nuevoEstado, observacionAyudante: observacion, motivoRechazo: motivo} : p));
       setSuccess('Estado actualizado correctamente');
+      setToast({mensaje: 'Estado actualizado correctamente', tipo: 'success'});
       setPedidoActivo(null);
       setNuevoEstado(''); setObservacion(''); setMotivo('');
     } catch (err) {
@@ -182,6 +185,7 @@ export default function GestionSolicitudes() {
           })}
         </div>
       </div>
+      {toast && <Toast mensaje={toast.mensaje} tipo={toast.tipo} onClose={() => setToast(null)} />}
     </div>
   );
 }

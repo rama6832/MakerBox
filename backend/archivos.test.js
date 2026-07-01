@@ -25,6 +25,7 @@ describe('subirArchivo', () => {
         originalname: 'modelo.stl',
         buffer: Buffer.from('contenido falso'),
         mimetype: 'application/octet-stream',
+        size: 1024, 
       },
       usuario: {id: 'user-1'},
     };
@@ -48,7 +49,7 @@ describe('subirArchivo', () => {
   });
 
   test('retorna 400 si no se envía ningún archivo', async () => {
-    const req = {file: undefined, usuario: {id: 'user-1'}};
+    const req = {file: undefined, usuario: {id: 'user-1'}, size: 1024};
     const res = mockRes();
 
     await subirArchivo(req, res);
@@ -61,7 +62,7 @@ describe('subirArchivo', () => {
 
   test('retorna 500 si Supabase Storage falla al subir', async () => {
     const req = {
-      file: {originalname: 'modelo.stl', buffer: Buffer.from('x'), mimetype: 'application/octet-stream'},
+      file: {originalname: 'modelo.stl', buffer: Buffer.from('x'), mimetype: 'application/octet-stream', size: 1024},
       usuario: {id: 'user-1'},
     };
     const res = mockRes();
@@ -79,7 +80,7 @@ describe('subirArchivo', () => {
 
   test('retorna 500 si ocurre una excepción inesperada', async () => {
     const req = {
-      file: {originalname: 'modelo.stl', buffer: Buffer.from('x'), mimetype: 'application/octet-stream'},
+      file: {originalname: 'modelo.stl', buffer: Buffer.from('x'), mimetype: 'application/octet-stream', size: 1024},
       usuario: {id: 'user-1'},
     };
     const res = mockRes();
